@@ -159,7 +159,15 @@ MonoBehaviour:
     pivot: {x: 0, y: 1, z: -10}
     distance: 0
     fieldOfView: 60
+  targetCameraConfiguration:
+    yaw: 0
+    pitch: 0
+    roll: 0
+    pivot: {x: 0, y: 1, z: -37.7}
+    distance: 0
+    fieldOfView: 60
   camera: {fileID: 2117204368}
+  speed: 1
 --- !u!4 &257826638
 Transform:
   m_ObjectHideFlags: 0
