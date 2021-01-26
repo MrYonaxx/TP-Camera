@@ -12,6 +12,16 @@ public class CameraConfiguration
     public float distance = 0.0f;
     public float fieldOfView = 60.0f;
 
+    public CameraConfiguration()
+    {
+        yaw = 0.0f;
+        pitch = 0.0f;
+        roll = 0.0f;
+        distance = 0.0f;
+        fieldOfView = 0.0f;
+        pivot = Vector3.zero;
+    }
+
     public Quaternion GetRotation()
     {
         return Quaternion.Euler(pitch, yaw, roll);
