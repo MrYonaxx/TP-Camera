@@ -5,9 +5,12 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] CameraConfiguration cameraConfiguration;
+    [SerializeField] CameraConfiguration targetCameraConfiguration;
     [SerializeField] Camera camera;
 
-    private static CameraController _instance;
+    public float speed = 10.0f;
+
+    public static CameraController _instance;
 
     void Awake()
     {
@@ -34,6 +37,17 @@ public class CameraController : MonoBehaviour
         camera.transform.rotation = cameraConfiguration.GetRotation();
 
         camera.fieldOfView = cameraConfiguration.fieldOfView;
+
+
+        Smooting();
+    }
+
+    public void Smooting()
+    {
+        if (speed * Time.deltaTime < 1)
+            cameraConfiguration.pivot = cameraConfiguration.pivot + (targetCameraConfiguration.pivot - cameraConfiguration.pivot) * speed * Time.deltaTime;
+        else
+            cameraConfiguration.pivot = targetCameraConfiguration.pivot;
     }
 
     private void OnDrawGizmos()
