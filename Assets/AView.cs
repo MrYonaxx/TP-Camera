@@ -43,4 +43,9 @@ public abstract class AView : MonoBehaviour
 		return null;
 	}
 
+	public void OnDrawGizmos()
+	{
+		GetConfiguration().DrawGizmos(Color.red);
+	}
+
 }
