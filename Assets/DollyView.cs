@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DollyView : AView
 {
+	public bool isAuto = false;
+
 	public float roll;
 	public float distance;
 	public float fov;
@@ -19,9 +21,18 @@ public class DollyView : AView
 		CameraConfiguration res = new CameraConfiguration();
 		res.roll = roll;
 		res.fieldOfView = fov;
-		distance += Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-		railPosition = rail.GetPosition(distance);
-		res.pivot = railPosition;
+
+		if (isAuto == true)
+		{
+			railPosition = rail.GetNearestPoint(target);
+			res.pivot = railPosition;
+		}
+		else
+		{
+			distance += Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+			railPosition = rail.GetPosition(distance);
+			res.pivot = railPosition;
+		}
 
 		Vector3 dir = (target.position - res.pivot).normalized;
 		res.yaw = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
@@ -29,4 +40,6 @@ public class DollyView : AView
 
 		return res;
 	}
+
+
 }

@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] CameraConfiguration cameraConfigurationDefault;
     [SerializeField] CameraConfiguration cameraConfiguration;
-    [SerializeField] CameraConfiguration targetCameraConfiguration;
+    //[SerializeField] CameraConfiguration targetCameraConfiguration;
     [SerializeField] Camera camera;
 
     public float speed = 10.0f;
@@ -47,9 +47,10 @@ public class CameraController : MonoBehaviour
 
         camera.fieldOfView = cameraConfiguration.fieldOfView;*/
 
-        SetCameraPosition(GetActivesViewConfiguration());
+        //SetCameraPosition(GetActivesViewConfiguration());
 
-        //Smoothing();
+        Smoothing(GetActivesViewConfiguration());
+        SetCameraPosition(cameraConfiguration);
     }
 
     public void SetCameraPosition(CameraConfiguration config)
@@ -60,12 +61,20 @@ public class CameraController : MonoBehaviour
     }
 
 
-    public void Smoothing()
+    public void Smoothing(CameraConfiguration target)
     {
         if (speed * Time.deltaTime < 1)
-            cameraConfiguration.pivot = cameraConfiguration.pivot + (targetCameraConfiguration.pivot - cameraConfiguration.pivot) * speed * Time.deltaTime;
+        {
+            cameraConfiguration.pivot = cameraConfiguration.pivot + (target.pivot - cameraConfiguration.pivot) * speed * Time.deltaTime;
+            cameraConfiguration.yaw = cameraConfiguration.yaw + (target.yaw - cameraConfiguration.yaw) * speed * Time.deltaTime;
+            cameraConfiguration.roll = cameraConfiguration.roll + (target.roll - cameraConfiguration.roll) * speed * Time.deltaTime;
+            cameraConfiguration.pitch = cameraConfiguration.pitch + (target.pitch - cameraConfiguration.pitch) * speed * Time.deltaTime;
+            cameraConfiguration.fieldOfView = cameraConfiguration.fieldOfView + (target.fieldOfView - cameraConfiguration.fieldOfView) * speed * Time.deltaTime;
+            cameraConfiguration.distance = cameraConfiguration.distance + (target.distance - cameraConfiguration.distance) * speed * Time.deltaTime;
+        }
+
         else
-            cameraConfiguration.pivot = targetCameraConfiguration.pivot;
+            cameraConfiguration.pivot = target.pivot;
     }
 
     private void OnDrawGizmos()
